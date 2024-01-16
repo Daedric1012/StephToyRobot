@@ -1,5 +1,5 @@
 # Toy Robot
-Created with Visual Studio 2022, using .Net 5.0
+Console application created with Visual Studio 2022, using .Net 5.0
 ### Description
 - The application is a simulation of a toy robot moving on a square tabletop, 
   of dimensions 5 units x 5 units.

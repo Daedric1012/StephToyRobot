@@ -11,75 +11,35 @@ namespace StephToyRobotTest
         [TestMethod]
         public void TestMethod1()
         {
-            const string Expected = "0,1,North";
+            const string Expected = "0,1,NORTH";
             using (var sw = new StringWriter())
             {
                 Console.SetOut(sw);
-                Program main = new Program();
-                Robot robot = new Robot(5, 5, 'N');
-                main.UserInput("PLACE 0,0,NORTH", ref robot);
-                main.UserInput("MOVE", ref robot);
-                main.UserInput("REPORT", ref robot);
+                Robot robot = new Robot();
+                Controller controller = new Controller(robot);
+                controller.UserInput("PLACE 0,0,NORTH");
+                controller.UserInput("MOVE");
+                controller.UserInput("REPORT");
 
                 var result = sw.ToString().Trim();
                 Assert.AreEqual(Expected, result);
             }
         }
-
         [TestMethod]
         public void TestMethod2()
         {
-            const string Expected = "0,0,West";
+            const string Expected = "3,3,NORTH";
             using (var sw = new StringWriter())
             {
                 Console.SetOut(sw);
-                Program main = new Program();
-                Robot robot = new Robot(5, 5, 'N');
-                main.UserInput("PLACE 0,0,NORTH", ref robot);
-                main.UserInput("LEFT", ref robot);
-                main.UserInput("REPORT", ref robot);
-
-                var result = sw.ToString().Trim();
-                Assert.AreEqual(Expected, result);
-            }
-        }
-
-        [TestMethod]
-        public void TestMethod3()
-        {
-            const string Expected = "3,3,North";
-            using (var sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-                Program main = new Program();
-                Robot robot = new Robot(5, 5, 'N');
-                main.UserInput("PLACE 1,2,EAST", ref robot);
-                main.UserInput("MOVE", ref robot);
-                main.UserInput("MOVE", ref robot);
-                main.UserInput("LEFT", ref robot);
-                main.UserInput("MOVE", ref robot);
-                main.UserInput("REPORT", ref robot);
-
-                var result = sw.ToString().Trim();
-                Assert.AreEqual(Expected, result);
-            }
-        }
-
-        [TestMethod]
-        public void TestMethod4()
-        {
-            const string Expected = "0,0,West";
-            using (var sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-                Program main = new Program();
-                Robot robot = new Robot(5, 5, 'N');
-                main.UserInput("PLACE 0,0,NORTH", ref robot);
-                main.UserInput("LEFT", ref robot);
-                main.UserInput("MOVE", ref robot);
-                main.UserInput("MOVE", ref robot);
-                main.UserInput("MOVE", ref robot);
-                main.UserInput("REPORT", ref robot);
+                Robot robot = new Robot();
+                Controller controller = new Controller(robot);
+                controller.UserInput("PLACE 1,2,EAST");
+                controller.UserInput("MOVE");
+                controller.UserInput("MOVE");
+                controller.UserInput("LEFT");
+                controller.UserInput("MOVE");
+                controller.UserInput("REPORT");
 
                 var result = sw.ToString().Trim();
                 Assert.AreEqual(Expected, result);

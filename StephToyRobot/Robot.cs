@@ -8,83 +8,127 @@ namespace StephToyRobot
 {
     public class Robot
     {
-        public int x, y;
-        public Direction direction = Direction.North;
+        private int maxY = 5;
+        private int maxX = 5;
+        private int minY = -1;
+        private int minX = -1;
 
-        // X, Y, Facing
-        public Robot(int x, int y, char f) {
-            this.x = x;
-            this.y = y;
-            switch(f)
+        // -1 to set invalid location by defualt
+        public int X { get; set; } = -1;
+        public int Y { get; set; } = -1;
+        public Direction direction = Direction.NORTH;
+
+        public Robot() {
+        }
+        public bool HasValidXY()
+        {
+            bool valid = true;
+
+            if(X < minX || X > maxX || Y < minY || Y > maxY) {
+                valid = false;
+            }
+            return valid;
+        }
+
+        // update Robots location.
+        public void Place(int x, int y, char f)
+        {
+            switch (f)
             {
                 case 'N':
-                    this.direction = Direction.North;
+                    this.direction = Direction.NORTH;
                     break;
                 case 'E':
-                    this.direction = Direction.East;
+                    this.direction = Direction.EAST;
                     break;
                 case 'S':
-                    this.direction = Direction.South;
+                    this.direction = Direction.SOUTH;
                     break;
                 case 'W':
-                    this.direction = Direction.West;
+                    this.direction = Direction.WEST;
                     break;
+                default:// invalid direction, 
+                    return;
             }
+            this.X = x;
+            this.Y = y;
         }
 
-        // Magic numbers should be removed, another function should handle checking if the destination is possible
-        public void Move() { 
-            switch(direction)
+        public string Report()
+        {
+            // if x/y not valid ignore input.
+            if (!HasValidXY())
             {
-                case Direction.North:
-                    y++;
-                    if (y > 5)
+                return null;
+            }
+            return X + "," + Y + "," + direction;
+        }
+
+        // will move the robot in the direction if it is inside the bounds
+        public void Move()
+        {
+            // if x/y not valid ignore input.
+            if (!HasValidXY())
+            {
+                return;
+            }
+            switch (direction)
+            {
+                case Direction.NORTH:
+                    if (Y < maxY && Y > minY)
                     {
-                        y = 5;
+                        Y++;
                     }
                     break;
-                case Direction.East:
-                    x++;
-                    if (x > 5)
+                case Direction.EAST:
+                    if (X < maxX && X > minX)
                     {
-                        x = 5;
+                        X++;
                     }
                     break;
-                case Direction.South:
-                    y--;
-                    if (y < 0)
+                case Direction.SOUTH:
+                    if (Y < maxY && Y > minY)
                     {
-                        y = 0;
+                        Y--;
                     }
                     break;
-                case Direction.West:
-                    x--;
-                    if (x < 0)
+                case Direction.WEST:
+                    if (X < maxX && X > minX)
                     {
-                        x = 0;
+                        X--;
                     }
                     break;
             }
 
         }
 
+        // Direction can be increased by 1 or decreased by 1 to change the direction in order of N,E,S,W thanks to Enum treating it as an int;
         public void TurnRight()
         {
-            if(direction == Direction.West)
+            // if x/y not valid ignore input
+            if (!HasValidXY())
             {
-                direction = Direction.North;
+                return;
+            }
+            if (direction == Direction.WEST)
+            {
+                direction = Direction.NORTH;
             }
             else
             {
                 direction++;
             }
         }
-
         public void TurnLeft()
         {
-            if (direction == Direction.North)
+            // if x/y not valid ignore input.
+            if (!HasValidXY())
             {
-                direction = Direction.West;
+                return;
+            }
+            if (direction == Direction.NORTH)
+            {
+                direction = Direction.WEST;
             }
             else
             {

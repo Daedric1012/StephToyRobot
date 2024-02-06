@@ -8,6 +8,7 @@ Console application created with Visual Studio 2022, using .Net 5.0
   prevented from falling to destruction. Any movement that would result in the 
   robot falling from the table will be prevented, however further valid 
   movement commands will still be allowed.
+- If the robot is placed off the table, it will ignore all comands until placed on the table.
 - The application can read commands of the following form:
 ```
 PLACE X,Y,F
